@@ -54,6 +54,7 @@ else
                         <ul class="list-unstyled small mb-0">
                             <li><strong>ABV:</strong> @style.Abv.ToString("0.0") %</li>
                             <li><strong>IBU:</strong> @(style.Ibu?.ToString() ?? "-")</li>
+
                             <li><strong>Lotes registrados:</strong> @style.Lots.Count</li>
                             <li><strong>Botellas en lotes:</strong> @style.TotalLotBottles</li>
                         </ul>

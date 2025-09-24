@@ -7,13 +7,13 @@
 <h1 class="text-danger">Eliminar estilo</h1>
 <p>¿Estás seguro que deseas eliminar el estilo <strong>@Model.BeerStyle?.Name</strong>? Esta acción no se puede deshacer.</p>
 
+
 @if (Model.BeerStyle?.Lots.Any() == true)
 {
     <div class="alert alert-warning">
         Este estilo tiene @Model.BeerStyle.Lots.Count lote(s) asociado(s). Se eliminarán junto con el estilo.
     </div>
 }
-
 <div class="row g-4">
     <div class="col-md-4">
         @if (!string.IsNullOrEmpty(Model.BeerStyle?.ImageFileName))
@@ -31,6 +31,7 @@
             <dd class="col-sm-8">@Model.BeerStyle?.Lots.Count</dd>
             <dt class="col-sm-4">Botellas registradas</dt>
             <dd class="col-sm-8">@Model.BeerStyle?.TotalLotBottles</dd>
+
         </dl>
         <form method="post" class="d-flex gap-2">
             <button type="submit" class="btn btn-danger">Eliminar</button>

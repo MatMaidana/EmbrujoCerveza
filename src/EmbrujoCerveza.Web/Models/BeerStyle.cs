@@ -1,6 +1,9 @@
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+
+
 
 namespace EmbrujoCerveza.Web.Models
 {
@@ -32,5 +35,6 @@ namespace EmbrujoCerveza.Web.Models
 
         [Display(Name = "Botellas registradas")]
         public int TotalLotBottles => Lots?.Sum(lot => lot.BottleCount) ?? 0;
+
     }
 }

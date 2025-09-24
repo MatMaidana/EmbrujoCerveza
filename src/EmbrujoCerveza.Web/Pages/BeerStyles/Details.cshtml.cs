@@ -27,8 +27,10 @@ namespace EmbrujoCerveza.Web.Pages.BeerStyles
             }
 
             BeerStyle = await _context.BeerStyles
+
                 .Include(style => style.Lots)
                     .ThenInclude(lot => lot.BottleType)
+
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -37,11 +39,11 @@ namespace EmbrujoCerveza.Web.Pages.BeerStyles
                 return NotFound();
             }
 
+
             BeerStyle.Lots = BeerStyle.Lots
                 .OrderByDescending(lot => lot.BottledOn ?? DateTime.MinValue)
                 .ThenByDescending(lot => lot.Id)
                 .ToList();
-
             return Page();
         }
     }

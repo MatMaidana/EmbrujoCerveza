@@ -16,6 +16,7 @@ namespace EmbrujoCerveza.Web.Pages
 
         public IList<BeerStyle> BeerStyles { get; private set; } = new List<BeerStyle>();
 
+
         public int TotalBottles => BeerStyles.Sum(style => style.TotalLotBottles);
 
         public int TotalLots => BeerStyles.Sum(style => style.Lots.Count);
@@ -25,6 +26,7 @@ namespace EmbrujoCerveza.Web.Pages
         public async Task OnGetAsync()
         {
             BeerStyles = await _context.BeerStyles
+
                 .Include(style => style.Lots)
                     .ThenInclude(lot => lot.BottleType)
                 .AsNoTracking()
@@ -32,6 +34,7 @@ namespace EmbrujoCerveza.Web.Pages
                 .ToListAsync();
 
             BottleTypeCount = await _context.BottleTypes.CountAsync();
+
         }
     }
 }

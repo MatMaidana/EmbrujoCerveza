@@ -8,6 +8,7 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
 - Carga y administración de lotes por estilo con cantidad de botellas, fecha de envasado y notas.
 - ABM de tipos de botella para controlar materiales y capacidades.
 - Búsqueda y filtrado rápido desde la web para estilos, lotes y envases.
+
 - Interfaz en español con soporte para mensajes de confirmación.
 - Persistencia mediante SQLite y creación automática de la base de datos al iniciar la aplicación.
 
