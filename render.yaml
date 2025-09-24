@@ -14,3 +14,4 @@ services:
     # Render automatically sets PORT; the Dockerfile binds ASP.NET Core to that port.
 databases:
   - name: embrujocervezadb
+

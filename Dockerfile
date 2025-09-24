@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # Build stage: restore and publish the ASP.NET Core project
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
