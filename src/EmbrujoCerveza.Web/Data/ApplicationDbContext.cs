@@ -11,8 +11,14 @@ namespace EmbrujoCerveza.Web.Data
         }
 
 
-        public DbSet<BottleType> BottleTypes => Set<BottleType>();
-        public DbSet<BeerLot> BeerLots => Set<BeerLot>();
+        public DbSet<BeerStyle> BeerStyles { get; set; } = null!;
+        public DbSet<BottleType> BottleTypes { get; set; } = null!;
+        public DbSet<BeerLot> BeerLots { get; set; } = null!;
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // opcional, solo si querés fijar el nombre exacto
+            modelBuilder.Entity<BottleType>().ToTable("BottleTypes");
+        }
     }
 }
