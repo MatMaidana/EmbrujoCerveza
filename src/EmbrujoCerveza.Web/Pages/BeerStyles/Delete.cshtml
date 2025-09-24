@@ -1,0 +1,31 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BeerStyles.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar estilo";
+}
+
+<h1 class="text-danger">Eliminar estilo</h1>
+<p>¿Estás seguro que deseas eliminar el estilo <strong>@Model.BeerStyle?.Name</strong>? Esta acción no se puede deshacer.</p>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.BeerStyle?.ImageFileName))
+        {
+            <img src="~/uploads/@Model.BeerStyle.ImageFileName" alt="@Model.BeerStyle.Name" class="img-fluid rounded" />
+        }
+    </div>
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-4">ABV</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.Abv.ToString("0.0") %</dd>
+            <dt class="col-sm-4">IBU</dt>
+            <dd class="col-sm-8">@(Model.BeerStyle?.Ibu?.ToString() ?? "-")</dd>
+            <dt class="col-sm-4">Stock</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.Stock</dd>
+        </dl>
+        <form method="post" class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
