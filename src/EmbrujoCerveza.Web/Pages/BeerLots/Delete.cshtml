@@ -1,0 +1,30 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BeerLots.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar lote";
+}
+
+<h1 class="text-danger">Eliminar lote</h1>
+<p>¿Estás seguro de eliminar el lote <strong>#@Model.BeerLot?.Id</strong>? Esta acción quitará las botellas del inventario.</p>
+
+<dl class="row">
+    <dt class="col-sm-3">Estilo</dt>
+    <dd class="col-sm-9">@Model.BeerLot?.BeerStyle?.Name</dd>
+
+    <dt class="col-sm-3">Tipo de botella</dt>
+    <dd class="col-sm-9">@Model.BeerLot?.BottleType?.DisplayName</dd>
+
+    <dt class="col-sm-3">Cantidad</dt>
+    <dd class="col-sm-9">@Model.BeerLot?.BottleCount</dd>
+
+    <dt class="col-sm-3">Fecha de envasado</dt>
+    <dd class="col-sm-9">@(Model.BeerLot?.BottledOn?.ToString("dd/MM/yyyy") ?? "Sin registro")</dd>
+
+    <dt class="col-sm-3">Notas</dt>
+    <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.BeerLot?.Notes) ? Model.BeerLot?.Notes : "-")</dd>
+</dl>
+
+<form method="post" class="d-flex gap-2">
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+</form>

@@ -1,4 +1,9 @@
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+
 
 namespace EmbrujoCerveza.Web.Models
 {
@@ -23,11 +28,13 @@ namespace EmbrujoCerveza.Web.Models
         [Range(0, 1000)]
         public int? Ibu { get; set; }
 
-        [Display(Name = "Stock (unidades)")]
-        [Range(0, int.MaxValue)]
-        public int Stock { get; set; }
-
         [Display(Name = "Imagen")]
         public string? ImageFileName { get; set; }
+
+        public ICollection<BeerLot> Lots { get; set; } = new List<BeerLot>();
+
+        [Display(Name = "Botellas registradas")]
+        public int TotalLotBottles => Lots?.Sum(lot => lot.BottleCount) ?? 0;
+
     }
 }

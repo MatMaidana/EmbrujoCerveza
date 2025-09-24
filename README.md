@@ -1,12 +1,14 @@
 # Embrujo Cerveza
 
-Aplicación web en ASP.NET Core para gestionar el stock de estilos de cerveza artesanal. Permite dar de alta, baja y modificar estilos, mantener el inventario actualizado y asociar una fotografía representativa a cada estilo.
+Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería artesanal. Permite dar de alta, baja y modificar estilos, registrar lotes asociados a cada receta y administrar los tipos de botella disponibles.
 
 ## Características principales
 
-- Registro completo de estilos de cerveza: nombre, descripción, ABV, IBU y stock disponible.
-- Carga y almacenamiento de imágenes para identificar visualmente cada estilo.
-- Búsqueda y filtrado rápido desde la web.
+- Registro completo de estilos de cerveza: nombre, descripción, ABV, IBU e imagen representativa.
+- Carga y administración de lotes por estilo con cantidad de botellas, fecha de envasado y notas.
+- ABM de tipos de botella para controlar materiales y capacidades.
+- Búsqueda y filtrado rápido desde la web para estilos, lotes y envases.
+
 - Interfaz en español con soporte para mensajes de confirmación.
 - Persistencia mediante SQLite y creación automática de la base de datos al iniciar la aplicación.
 
@@ -35,6 +37,8 @@ Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está 
 - `src/EmbrujoCerveza.Web`: proyecto web principal con páginas Razor.
 - `wwwroot`: archivos estáticos (CSS, imágenes subidas por los usuarios).
 - `Pages/BeerStyles`: páginas Razor dedicadas a la administración del inventario.
+- `Pages/BeerLots`: ABM de lotes relacionados con cada estilo.
+- `Pages/BottleTypes`: gestión de capacidades y materiales de envases.
 
 ## Migraciones de base de datos
 

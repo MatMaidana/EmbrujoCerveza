@@ -60,7 +60,7 @@ namespace EmbrujoCerveza.Web.Pages.BeerStyles
 
             BeerStyle = styleToUpdate;
 
-            if (!await TryUpdateModelAsync(styleToUpdate, nameof(BeerStyle), s => s.Name, s => s.Description, s => s.Abv, s => s.Ibu, s => s.Stock))
+            if (!await TryUpdateModelAsync(styleToUpdate, nameof(BeerStyle), s => s.Name, s => s.Description, s => s.Abv, s => s.Ibu))
             {
                 return Page();
             }

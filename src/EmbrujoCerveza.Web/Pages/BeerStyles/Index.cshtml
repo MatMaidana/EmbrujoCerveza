@@ -38,7 +38,9 @@ else
                     <th>Nombre</th>
                     <th>ABV (%)</th>
                     <th>IBU</th>
-                    <th>Stock</th>
+
+                    <th>Lotes</th>
+                    <th>Botellas registradas</th>
                     <th></th>
                 </tr>
             </thead>
@@ -58,11 +60,14 @@ else
                     </td>
                     <td>@item.Abv.ToString("0.0")</td>
                     <td>@(item.Ibu?.ToString() ?? "-")</td>
-                    <td>@item.Stock</td>
+                    <td>@item.Lots.Count</td>
+                    <td>@item.TotalLotBottles</td>
                     <td class="text-end">
-                        <div class="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-sm flex-wrap">
                             <a class="btn btn-outline-secondary" asp-page="Details" asp-route-id="@item.Id">Detalles</a>
                             <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@item.Id">Editar</a>
+                            <a class="btn btn-outline-success" asp-page="/BeerLots/Create" asp-route-styleId="@item.Id">Registrar lote</a>
+                            <a class="btn btn-outline-secondary" asp-page="/BeerLots/Index" asp-route-styleId="@item.Id">Lotes</a>
                             <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@item.Id">Eliminar</a>
                         </div>
                     </td>

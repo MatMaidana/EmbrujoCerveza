@@ -1,12 +1,10 @@
-using System;
-using System.Linq;
 using EmbrujoCerveza.Web.Data;
 using EmbrujoCerveza.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmbrujoCerveza.Web.Pages.BeerStyles
+namespace EmbrujoCerveza.Web.Pages.BeerLots
 {
     public class DetailsModel : PageModel
     {
@@ -17,7 +15,7 @@ namespace EmbrujoCerveza.Web.Pages.BeerStyles
             _context = context;
         }
 
-        public BeerStyle? BeerStyle { get; private set; }
+        public BeerLot? BeerLot { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -26,24 +24,17 @@ namespace EmbrujoCerveza.Web.Pages.BeerStyles
                 return NotFound();
             }
 
-            BeerStyle = await _context.BeerStyles
-
-                .Include(style => style.Lots)
-                    .ThenInclude(lot => lot.BottleType)
-
+            BeerLot = await _context.BeerLots
+                .Include(lot => lot.BeerStyle)
+                .Include(lot => lot.BottleType)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(lot => lot.Id == id);
 
-            if (BeerStyle == null)
+            if (BeerLot == null)
             {
                 return NotFound();
             }
 
-
-            BeerStyle.Lots = BeerStyle.Lots
-                .OrderByDescending(lot => lot.BottledOn ?? DateTime.MinValue)
-                .ThenByDescending(lot => lot.Id)
-                .ToList();
             return Page();
         }
     }

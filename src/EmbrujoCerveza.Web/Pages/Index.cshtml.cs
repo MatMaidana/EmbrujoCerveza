@@ -16,14 +16,25 @@ namespace EmbrujoCerveza.Web.Pages
 
         public IList<BeerStyle> BeerStyles { get; private set; } = new List<BeerStyle>();
 
-        public int TotalStock => BeerStyles.Sum(style => style.Stock);
+
+        public int TotalBottles => BeerStyles.Sum(style => style.TotalLotBottles);
+
+        public int TotalLots => BeerStyles.Sum(style => style.Lots.Count);
+
+        public int BottleTypeCount { get; private set; }
 
         public async Task OnGetAsync()
         {
             BeerStyles = await _context.BeerStyles
+
+                .Include(style => style.Lots)
+                    .ThenInclude(lot => lot.BottleType)
                 .AsNoTracking()
                 .OrderBy(style => style.Name)
                 .ToListAsync();
+
+            BottleTypeCount = await _context.BottleTypes.CountAsync();
+
         }
     }
 }
