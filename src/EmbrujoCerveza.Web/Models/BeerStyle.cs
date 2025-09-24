@@ -32,5 +32,6 @@ namespace EmbrujoCerveza.Web.Models
 
         [Display(Name = "Botellas registradas")]
         public int TotalLotBottles => Lots?.Sum(lot => lot.BottleCount) ?? 0;
+
     }
 }
