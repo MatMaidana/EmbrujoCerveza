@@ -1,0 +1,51 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BeerLots.EditModel
+@{
+    ViewData["Title"] = "Editar lote";
+}
+
+<h1>Editar lote</h1>
+<a asp-page="Index" class="btn btn-link p-0 mb-4">&larr; Volver al listado</a>
+
+<form method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="BeerLot!.BeerStyleId" class="form-label"></label>
+        <select asp-for="BeerLot!.BeerStyleId" asp-items="Model.BeerStylesSelectList" class="form-select"></select>
+        <span asp-validation-for="BeerLot!.BeerStyleId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="BeerLot!.BottleTypeId" class="form-label"></label>
+        <select asp-for="BeerLot!.BottleTypeId" asp-items="Model.BottleTypesSelectList" class="form-select"></select>
+        <span asp-validation-for="BeerLot!.BottleTypeId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="BeerLot!.BottleCount" class="form-label"></label>
+        <input asp-for="BeerLot!.BottleCount" class="form-control" />
+        <span asp-validation-for="BeerLot!.BottleCount" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="BeerLot!.BottledOn" class="form-label"></label>
+        <input asp-for="BeerLot!.BottledOn" type="date" class="form-control" />
+        <span asp-validation-for="BeerLot!.BottledOn" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="BeerLot!.Notes" class="form-label"></label>
+        <textarea asp-for="BeerLot!.Notes" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="BeerLot!.Notes" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="~/Pages/Shared/_ValidationScriptsPartial.cshtml" />
+}

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: embrujocerveza
+    env: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
+    dockerfilePath: Dockerfile
+    # Render automatically sets PORT; the Dockerfile binds ASP.NET Core to that port.
+    # Mount a persistent disk if you want to keep the SQLite database and uploaded images.
+databases: []

@@ -1,0 +1,81 @@
+@page
+@model EmbrujoCerveza.Web.Pages.BeerLots.IndexModel
+@using System.Linq
+@{
+    ViewData["Title"] = "Lotes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-lg-row gap-3">
+    <h1 class="mb-0">Lotes de cerveza</h1>
+    <a class="btn btn-primary" asp-page="Create">Registrar lote</a>
+</div>
+
+<form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <label asp-for="StyleId" class="form-label">Estilo</label>
+        <select asp-for="StyleId" asp-items="Model.BeerStylesSelectList" class="form-select">
+            <option value="">Todos</option>
+        </select>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <label asp-for="BottleTypeId" class="form-label">Tipo de botella</label>
+        <select asp-for="BottleTypeId" asp-items="Model.BottleTypesSelectList" class="form-select">
+            <option value="">Todos</option>
+        </select>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <label asp-for="Search" class="form-label">Buscar</label>
+        <input asp-for="Search" class="form-control" placeholder="Notas o número de lote" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Aplicar filtros</button>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-link" asp-page="Index">Limpiar</a>
+    </div>
+</form>
+
+@if (!Model.BeerLots.Any())
+{
+    <div class="alert alert-info">
+        No hay lotes registrados con los filtros actuales.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Estilo</th>
+                    <th>Tipo de botella</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de envasado</th>
+                    <th>Notas</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var lot in Model.BeerLots)
+            {
+                <tr>
+                    <td>@lot.Id</td>
+                    <td>@lot.BeerStyle?.Name</td>
+                    <td>@(lot.BottleType?.DisplayName ?? "-")</td>
+                    <td>@lot.BottleCount</td>
+                    <td>@(lot.BottledOn?.ToString("dd/MM/yyyy") ?? "Sin registro")</td>
+                    <td>@(!string.IsNullOrWhiteSpace(lot.Notes) ? lot.Notes : "-")</td>
+                    <td class="text-end">
+                        <div class="btn-group btn-group-sm flex-wrap">
+                            <a class="btn btn-outline-secondary" asp-page="Details" asp-route-id="@lot.Id">Detalles</a>
+                            <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@lot.Id">Editar</a>
+                            <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@lot.Id">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

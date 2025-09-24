@@ -1,0 +1,20 @@
+# Build artifacts
+bin/
+obj/
+
+# SQLite database
+app.db
+*.db-shm
+*.db-wal
+
+# User secrets
+secrets.json
+
+# Visual Studio files
+.vs/
+*.user
+*.swp
+
+# Uploaded images
+src/EmbrujoCerveza.Web/wwwroot/uploads/*
+!src/EmbrujoCerveza.Web/wwwroot/uploads/.gitkeep
