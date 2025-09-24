@@ -1,0 +1,70 @@
+@page
+@model EmbrujoCerveza.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="d-flex justify-content-between align-items-start align-items-md-center flex-column flex-md-row mb-4 gap-3">
+    <div>
+        <h1 class="display-5">Inventario de estilos</h1>
+        <p class="lead">Gestiona el stock de tus cervezas artesanales favoritas.</p>
+    </div>
+    <div class="text-md-end">
+        <span class="badge bg-success fs-6">Botellas registradas: @Model.TotalBottles</span>
+        <div class="mt-2 text-muted small">
+            <span class="me-3">Lotes cargados: <strong>@Model.TotalLots</strong></span>
+            <span>Tipos de botella: <strong>@Model.BottleTypeCount</strong></span>
+        </div>
+        <div class="mt-3 d-flex gap-2 flex-wrap justify-content-start justify-content-md-end">
+            <a class="btn btn-primary" asp-page="/BeerStyles/Create">Agregar estilo</a>
+            <a class="btn btn-outline-primary" asp-page="/BeerLots/Create">Registrar lote</a>
+            <a class="btn btn-outline-secondary" asp-page="/BeerLots/Index">Ver lotes</a>
+            <a class="btn btn-outline-secondary" asp-page="/BottleTypes/Index">Tipos de botella</a>
+            <a class="btn btn-outline-secondary" asp-page="/BeerStyles/Index">Ver estilos</a>
+        </div>
+    </div>
+</div>
+
+@if (!Model.BeerStyles.Any())
+{
+    <div class="alert alert-info">
+        Todavía no cargaste estilos. ¡Comienza creando uno nuevo desde el botón "Agregar estilo"!
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        @foreach (var style in Model.BeerStyles)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(style.ImageFileName))
+                    {
+                        <img class="card-img-top beer-card-img" src="~/uploads/@style.ImageFileName" alt="@style.Name" />
+                    }
+                    else
+                    {
+                        <div class="placeholder-image text-center text-muted py-5">
+                            <span>Sin imagen</span>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@style.Name</h5>
+                        <p class="card-text text-muted small">@(!string.IsNullOrWhiteSpace(style.Description) ? style.Description : "Sin descripción disponible.")</p>
+                        <ul class="list-unstyled small mb-0">
+                            <li><strong>ABV:</strong> @style.Abv.ToString("0.0") %</li>
+                            <li><strong>IBU:</strong> @(style.Ibu?.ToString() ?? "-")</li>
+                            <li><strong>Lotes registrados:</strong> @style.Lots.Count</li>
+                            <li><strong>Botellas en lotes:</strong> @style.TotalLotBottles</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 d-flex flex-wrap gap-2">
+                        <a class="btn btn-sm btn-outline-primary" asp-page="/BeerStyles/Edit" asp-route-id="@style.Id">Editar</a>
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="/BeerStyles/Details" asp-route-id="@style.Id">Detalles</a>
+                        <a class="btn btn-sm btn-outline-success" asp-page="/BeerLots/Create" asp-route-styleId="@style.Id">Nuevo lote</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
