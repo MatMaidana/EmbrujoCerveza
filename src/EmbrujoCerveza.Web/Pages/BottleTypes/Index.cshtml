@@ -1,0 +1,67 @@
+@page
+@model EmbrujoCerveza.Web.Pages.BottleTypes.IndexModel
+@using System.Linq
+@{
+    ViewData["Title"] = "Tipos de botella";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-lg-row gap-3">
+    <h1 class="mb-0">Tipos de botella</h1>
+    <a class="btn btn-primary" asp-page="Create">Agregar tipo</a>
+</div>
+
+<form method="get" class="row g-2 align-items-end mb-4">
+    <div class="col-sm-8 col-md-6 col-lg-4">
+        <label asp-for="Search" class="form-label">Buscar</label>
+        <input asp-for="Search" class="form-control" placeholder="Material o descripción" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-link" asp-page="Index">Limpiar</a>
+    </div>
+</form>
+
+@if (!Model.BottleTypes.Any())
+{
+    <div class="alert alert-warning">
+        No se encontraron tipos de botella. Crea uno nuevo para comenzar.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Capacidad</th>
+                    <th>Material</th>
+                    <th>Descripción</th>
+                    <th>Lotes asociados</th>
+                    <th>Botellas totales</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var type in Model.BottleTypes)
+            {
+                <tr>
+                    <td>@type.CapacityMl ml</td>
+                    <td>@type.Material</td>
+                    <td>@(!string.IsNullOrWhiteSpace(type.Description) ? type.Description : "-")</td>
+                    <td>@type.Lots.Count</td>
+                    <td>@type.Lots.Sum(lot => lot.BottleCount)</td>
+                    <td class="text-end">
+                        <div class="btn-group btn-group-sm flex-wrap">
+                            <a class="btn btn-outline-secondary" asp-page="Details" asp-route-id="@type.Id">Detalles</a>
+                            <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@type.Id">Editar</a>
+                            <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@type.Id">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

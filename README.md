@@ -1,0 +1,63 @@
+# Embrujo Cerveza
+
+Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería artesanal. Permite dar de alta, baja y modificar estilos, registrar lotes asociados a cada receta y administrar los tipos de botella disponibles.
+
+## Características principales
+
+- Registro completo de estilos de cerveza: nombre, descripción, ABV, IBU e imagen representativa.
+- Carga y administración de lotes por estilo con cantidad de botellas, fecha de envasado y notas.
+- ABM de tipos de botella para controlar materiales y capacidades.
+- Búsqueda y filtrado rápido desde la web para estilos, lotes y envases.
+- Interfaz en español con soporte para mensajes de confirmación.
+- Persistencia mediante PostgreSQL con migraciones de Entity Framework Core ya incluidas.
+
+## Requisitos
+
+- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+
+## Puesta en marcha
+
+1. Restaurar paquetes y compilar el proyecto:
+   ```bash
+   dotnet restore
+   dotnet build
+   ```
+2. Asegura una instancia de PostgreSQL accesible. Por defecto el proyecto usa la cadena `Host=localhost;Database=embrujocervezadb;Username=postgres;Password=postgres;`, que puedes adaptar en `appsettings.json` o mediante la variable de entorno `ConnectionStrings__DefaultConnection`.
+
+3. Ejecutar la aplicación web:
+   ```bash
+   dotnet run --project src/EmbrujoCerveza.Web
+   ```
+4. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
+
+Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está incluido en el control de versiones mediante un marcador `.gitkeep`, pero los archivos subidos se omiten por el `.gitignore`.
+
+## Despliegue en Render
+
+El repositorio incluye un `Dockerfile` multi-stage y un manifiesto `render.yaml` para simplificar la publicación en [Render](https://render.com).
+
+1. Haz fork del repositorio (o súbelo a tu cuenta) y vincúlalo desde el panel de Render con **New → Blueprint**.
+2. Render detectará `render.yaml` y creará un servicio web en el plan gratuito usando la imagen Docker que construye el proyecto ASP.NET Core.
+3. Durante el build se ejecuta `dotnet publish` y, en ejecución, la aplicación escucha en el puerto asignado por Render (`$PORT`).
+4. Conecta el servicio a tu base de datos PostgreSQL. Si usas un servicio de Render, añade la referencia en `render.yaml` o desde el panel para que la variable `DATABASE_URL` quede disponible. La aplicación convierte automáticamente las URLs de la forma `postgresql://usuario:password@host:puerto/base` al formato que exige Npgsql.
+
+También puedes desplegar manualmente la imagen construida por el Dockerfile con `render deploy`, o usar el mismo contenedor en otras plataformas (Fly.io, Railway, etc.).
+
+## Estructura del proyecto
+
+- `EmbrujoCerveza.sln`: solución de Visual Studio.
+- `src/EmbrujoCerveza.Web`: proyecto web principal con páginas Razor.
+- `wwwroot`: archivos estáticos (CSS, imágenes subidas por los usuarios).
+- `Pages/BeerStyles`: páginas Razor dedicadas a la administración del inventario.
+- `Pages/BeerLots`: ABM de lotes relacionados con cada estilo.
+- `Pages/BottleTypes`: gestión de capacidades y materiales de envases.
+
+## Migraciones de base de datos
+
+El repositorio ya incluye la migración inicial (`InitialCreate`) para PostgreSQL. Para aplicar los cambios a una instancia vacía ejecuta:
+
+```bash
+dotnet ef database update --project src/EmbrujoCerveza.Web --startup-project src/EmbrujoCerveza.Web
+```
+
+> Para ejecutar el comando anterior necesitas tener instalado el paquete `dotnet-ef` de Entity Framework Core Tools (`dotnet tool install --global dotnet-ef`).

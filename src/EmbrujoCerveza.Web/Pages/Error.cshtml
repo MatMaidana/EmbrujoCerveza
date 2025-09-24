@@ -1,0 +1,15 @@
+@page
+@model EmbrujoCerveza.Web.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Ocurrió un error.</h1>
+<p class="lead">Se produjo un error al procesar tu solicitud.</p>
+
+@if (Model.ShowRequestId)
+{
+    <p><strong>ID de solicitud:</strong> <code>@Model.RequestId</code></p>
+}
+
+<p>Si el problema persiste, contacta al administrador del sistema.</p>
