@@ -9,7 +9,8 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
 - ABM de tipos de botella para controlar materiales y capacidades.
 - Búsqueda y filtrado rápido desde la web para estilos, lotes y envases.
 - Interfaz en español con soporte para mensajes de confirmación.
-- Persistencia mediante SQLite y creación automática de la base de datos al iniciar la aplicación.
+- Persistencia mediante PostgreSQL con migraciones de Entity Framework Core ya incluidas.
+
 
 ## Requisitos
 
@@ -22,11 +23,14 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
    dotnet restore
    dotnet build
    ```
-2. Ejecutar la aplicación web:
+2. Asegura una instancia de PostgreSQL accesible. Por defecto el proyecto usa la cadena `Host=localhost;Database=embrujocervezadb;Username=postgres;Password=postgres;`, que puedes adaptar en `appsettings.json` o mediante la variable de entorno `ConnectionStrings__DefaultConnection`.
+
+3. Ejecutar la aplicación web:
    ```bash
    dotnet run --project src/EmbrujoCerveza.Web
    ```
-3. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
+4. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
+
 
 Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está incluido en el control de versiones mediante un marcador `.gitkeep`, pero los archivos subidos se omiten por el `.gitignore`.
 
@@ -37,7 +41,7 @@ El repositorio incluye un `Dockerfile` multi-stage y un manifiesto `render.yaml`
 1. Haz fork del repositorio (o súbelo a tu cuenta) y vincúlalo desde el panel de Render con **New → Blueprint**.
 2. Render detectará `render.yaml` y creará un servicio web en el plan gratuito usando la imagen Docker que construye el proyecto ASP.NET Core.
 3. Durante el build se ejecuta `dotnet publish` y, en ejecución, la aplicación escucha en el puerto asignado por Render (`$PORT`).
-4. Si quieres conservar la base de datos SQLite (`EmbrujoCerveza.db`) y las imágenes subidas, agrega un **persistent disk** desde la configuración del servicio y móntalo en `/var/data`. Actualiza `appsettings.json` o las variables de entorno (`ConnectionStrings__DefaultConnection` y `UploadSettings__RootPath`) para apuntar a esa ruta.
+4. Conecta el servicio a tu base de datos PostgreSQL. Si usas un servicio de Render, añade la referencia en `render.yaml` o desde el panel para que la variable `DATABASE_URL` quede disponible. La aplicación convierte automáticamente las URLs de la forma `postgresql://usuario:password@host:puerto/base` al formato que exige Npgsql.
 
 También puedes desplegar manualmente la imagen construida por el Dockerfile con `render deploy`, o usar el mismo contenedor en otras plataformas (Fly.io, Railway, etc.).
 
@@ -52,11 +56,10 @@ También puedes desplegar manualmente la imagen construida por el Dockerfile con
 
 ## Migraciones de base de datos
 
-La aplicación crea la base de datos automáticamente si no existe. Si prefieres trabajar con migraciones de Entity Framework Core, puedes generarlas con los siguientes comandos:
+El repositorio ya incluye la migración inicial (`InitialCreate`) para PostgreSQL. Para aplicar los cambios a una instancia vacía ejecuta:
 
 ```bash
-dotnet ef migrations add InitialCreate --project src/EmbrujoCerveza.Web --startup-project src/EmbrujoCerveza.Web
 dotnet ef database update --project src/EmbrujoCerveza.Web --startup-project src/EmbrujoCerveza.Web
 ```
 
-> Para ejecutar los comandos anteriores necesitas tener instalado el paquete `dotnet-ef` de Entity Framework Core Tools (`dotnet tool install --global dotnet-ef`).
+> Para ejecutar el comando anterior necesitas tener instalado el paquete `dotnet-ef` de Entity Framework Core Tools (`dotnet tool install --global dotnet-ef`).

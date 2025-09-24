@@ -9,11 +9,8 @@ namespace EmbrujoCerveza.Web.Data
             : base(options)
         {
         }
-
-
         public DbSet<BeerStyle> BeerStyles { get; set; } = null!;
         public DbSet<BottleType> BottleTypes { get; set; } = null!;
         public DbSet<BeerLot> BeerLots { get; set; } = null!;
-
     }
 }

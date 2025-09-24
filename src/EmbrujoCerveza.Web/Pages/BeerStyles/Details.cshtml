@@ -1,7 +1,6 @@
 @page "{id:int}"
 @model EmbrujoCerveza.Web.Pages.BeerStyles.DetailsModel
 @using System.Linq
-
 @{
     ViewData["Title"] = "Detalle del estilo";
 }
@@ -33,7 +32,7 @@
 
             <dt class="col-sm-4">IBU</dt>
             <dd class="col-sm-8">@(Model.BeerStyle?.Ibu?.ToString() ?? "-")</dd>
-            <dt class="col-sm-4">Botellas en lotes</dt>
+           <dt class="col-sm-4">Botellas en lotes</dt>
             <dd class="col-sm-8">@Model.BeerStyle?.TotalLotBottles</dd>
 
             <dt class="col-sm-4">Cantidad de lotes</dt>
@@ -97,4 +96,3 @@
         </div>
     }
 </section>
-

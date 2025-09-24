@@ -32,7 +32,6 @@ namespace EmbrujoCerveza.Web.Pages
                 .ToListAsync();
 
             BottleTypeCount = await _context.BottleTypes.CountAsync();
-
         }
     }
 }
