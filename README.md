@@ -11,6 +11,7 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
 - Interfaz en español con soporte para mensajes de confirmación.
 - Persistencia mediante PostgreSQL con migraciones de Entity Framework Core ya incluidas.
 
+
 ## Requisitos
 
 - [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
@@ -29,6 +30,7 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
    dotnet run --project src/EmbrujoCerveza.Web
    ```
 4. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
+
 
 Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está incluido en el control de versiones mediante un marcador `.gitkeep`, pero los archivos subidos se omiten por el `.gitignore`.
 
