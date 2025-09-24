@@ -1,0 +1,42 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BottleTypes.EditModel
+@{
+    ViewData["Title"] = "Editar tipo de botella";
+}
+
+<h1>Editar tipo de botella</h1>
+<a asp-page="Index" class="btn btn-link p-0 mb-4">&larr; Volver al listado</a>
+
+<form method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-sm-6 col-lg-4">
+        <label asp-for="BottleType!.CapacityMl" class="form-label"></label>
+        <div class="input-group">
+            <input asp-for="BottleType!.CapacityMl" class="form-control" />
+            <span class="input-group-text">ml</span>
+        </div>
+        <span asp-validation-for="BottleType!.CapacityMl" class="text-danger"></span>
+    </div>
+
+    <div class="col-sm-6 col-lg-4">
+        <label asp-for="BottleType!.Material" class="form-label"></label>
+        <input asp-for="BottleType!.Material" class="form-control" />
+        <span asp-validation-for="BottleType!.Material" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="BottleType!.Description" class="form-label"></label>
+        <textarea asp-for="BottleType!.Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="BottleType!.Description" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="~/Pages/Shared/_ValidationScriptsPartial.cshtml" />
+}
