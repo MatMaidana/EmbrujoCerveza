@@ -7,13 +7,13 @@
 <h1 class="text-danger">Eliminar estilo</h1>
 <p>¿Estás seguro que deseas eliminar el estilo <strong>@Model.BeerStyle?.Name</strong>? Esta acción no se puede deshacer.</p>
 
-
 @if (Model.BeerStyle?.Lots.Any() == true)
 {
     <div class="alert alert-warning">
         Este estilo tiene @Model.BeerStyle.Lots.Count lote(s) asociado(s). Se eliminarán junto con el estilo.
     </div>
 }
+
 <div class="row g-4">
     <div class="col-md-4">
         @if (!string.IsNullOrEmpty(Model.BeerStyle?.ImageFileName))

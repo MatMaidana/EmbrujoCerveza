@@ -8,7 +8,6 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
 - Carga y administración de lotes por estilo con cantidad de botellas, fecha de envasado y notas.
 - ABM de tipos de botella para controlar materiales y capacidades.
 - Búsqueda y filtrado rápido desde la web para estilos, lotes y envases.
-
 - Interfaz en español con soporte para mensajes de confirmación.
 - Persistencia mediante SQLite y creación automática de la base de datos al iniciar la aplicación.
 
@@ -30,6 +29,17 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
 3. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
 
 Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está incluido en el control de versiones mediante un marcador `.gitkeep`, pero los archivos subidos se omiten por el `.gitignore`.
+
+## Despliegue en Render
+
+El repositorio incluye un `Dockerfile` multi-stage y un manifiesto `render.yaml` para simplificar la publicación en [Render](https://render.com).
+
+1. Haz fork del repositorio (o súbelo a tu cuenta) y vincúlalo desde el panel de Render con **New → Blueprint**.
+2. Render detectará `render.yaml` y creará un servicio web en el plan gratuito usando la imagen Docker que construye el proyecto ASP.NET Core.
+3. Durante el build se ejecuta `dotnet publish` y, en ejecución, la aplicación escucha en el puerto asignado por Render (`$PORT`).
+4. Si quieres conservar la base de datos SQLite (`EmbrujoCerveza.db`) y las imágenes subidas, agrega un **persistent disk** desde la configuración del servicio y móntalo en `/var/data`. Actualiza `appsettings.json` o las variables de entorno (`ConnectionStrings__DefaultConnection` y `UploadSettings__RootPath`) para apuntar a esa ruta.
+
+También puedes desplegar manualmente la imagen construida por el Dockerfile con `render deploy`, o usar el mismo contenedor en otras plataformas (Fly.io, Railway, etc.).
 
 ## Estructura del proyecto
 

@@ -16,8 +16,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
-
+    context.Database.EnsureCreated();
     if (!context.BeerStyles.Any())
     {
         context.BeerStyles.AddRange(
