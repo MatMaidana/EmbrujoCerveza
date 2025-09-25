@@ -1,0 +1,31 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BottleTypes.DeleteModel
+@{
+    ViewData["Title"] = "Eliminar tipo de botella";
+}
+
+<h1 class="text-danger">Eliminar tipo de botella</h1>
+<p>¿Deseas eliminar el tipo <strong>@Model.BottleType?.DisplayName</strong>? Esta acción no se puede deshacer.</p>
+
+@if (Model.BottleType?.Lots.Any() == true)
+{
+    <div class="alert alert-warning">
+        Hay @Model.BottleType.Lots.Count lote(s) que utilizan este envase. También se eliminarán.
+    </div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Capacidad</dt>
+    <dd class="col-sm-9">@Model.BottleType?.CapacityMl ml</dd>
+
+    <dt class="col-sm-3">Material</dt>
+    <dd class="col-sm-9">@Model.BottleType?.Material</dd>
+
+    <dt class="col-sm-3">Descripción</dt>
+    <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model.BottleType?.Description) ? Model.BottleType?.Description : "Sin descripción")</dd>
+</dl>
+
+<form method="post" class="d-flex gap-2">
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-page="Index" class="btn btn-outline-secondary">Cancelar</a>
+</form>
