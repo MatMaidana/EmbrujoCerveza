@@ -22,6 +22,7 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
    dotnet restore
    dotnet build
    ```
+   
 2. Asegura una instancia de PostgreSQL accesible. Por defecto el proyecto usa la cadena `Host=localhost;Database=embrujocervezadb;Username=postgres;Password=postgres;`, que puedes adaptar en `appsettings.json`. En entornos hospedados define la variable `DATABASE_URL` (o `ConnectionStrings__DefaultConnection`) con la URL proporcionada por tu proveedor; la aplicación la normaliza automáticamente al formato que espera Npgsql.
 
 3. Ejecutar la aplicación web:
