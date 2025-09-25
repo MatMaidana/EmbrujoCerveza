@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: embrujocerveza
+    env: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: embrujocervezadb
+          property: connectionString
+    # Render automatically sets PORT; the Dockerfile binds ASP.NET Core to that port.
+databases:
+  - name: embrujocervezadb

@@ -1,0 +1,99 @@
+@page "{id:int}"
+@model EmbrujoCerveza.Web.Pages.BeerStyles.DetailsModel
+@using System.Linq
+@{
+    ViewData["Title"] = "Detalle del estilo";
+}
+
+<h1 class="mb-3">@Model.BeerStyle?.Name</h1>
+<a asp-page="Index" class="btn btn-link p-0 mb-4">&larr; Volver al listado</a>
+
+<div class="row g-4">
+    <div class="col-md-5">
+        @if (!string.IsNullOrEmpty(Model.BeerStyle?.ImageFileName))
+        {
+            <img src="~/uploads/@Model.BeerStyle.ImageFileName" alt="@Model.BeerStyle.Name" class="img-fluid rounded shadow-sm" />
+        }
+        else
+        {
+            <div class="placeholder-image rounded shadow-sm">Sin imagen</div>
+        }
+    </div>
+    <div class="col-md-7">
+        <dl class="row">
+            <dt class="col-sm-4">Nombre</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.Name</dd>
+
+            <dt class="col-sm-4">Descripción</dt>
+            <dd class="col-sm-8">@(!string.IsNullOrWhiteSpace(Model.BeerStyle?.Description) ? Model.BeerStyle?.Description : "Sin descripción registrada")</dd>
+
+            <dt class="col-sm-4">ABV</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.Abv.ToString("0.0") %</dd>
+
+            <dt class="col-sm-4">IBU</dt>
+            <dd class="col-sm-8">@(Model.BeerStyle?.Ibu?.ToString() ?? "-")</dd>
+
+            <dt class="col-sm-4">Botellas en lotes</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.TotalLotBottles</dd>
+
+            <dt class="col-sm-4">Cantidad de lotes</dt>
+            <dd class="col-sm-8">@Model.BeerStyle?.Lots.Count</dd>
+        </dl>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@Model.BeerStyle?.Id">Editar</a>
+            <a class="btn btn-outline-success" asp-page="/BeerLots/Create" asp-route-styleId="@Model.BeerStyle?.Id">Registrar lote</a>
+            <a class="btn btn-outline-secondary" asp-page="/BeerLots/Index" asp-route-styleId="@Model.BeerStyle?.Id">Ver lotes</a>
+            <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@Model.BeerStyle?.Id">Eliminar</a>
+        </div>
+    </div>
+</div>
+
+<section class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-column flex-md-row gap-2">
+        <h2 class="h4 mb-0">Lotes del estilo</h2>
+        <a class="btn btn-sm btn-success" asp-page="/BeerLots/Create" asp-route-styleId="@Model.BeerStyle?.Id">Agregar lote</a>
+    </div>
+
+    @if (Model.BeerStyle?.Lots.Any() == true)
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo de botella</th>
+                        <th>Cantidad</th>
+                        <th>Fecha de envasado</th>
+                        <th>Notas</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var lot in Model.BeerStyle.Lots)
+                {
+                    <tr>
+                        <td>#@lot.Id</td>
+                        <td>@(lot.BottleType?.DisplayName ?? "-")</td>
+                        <td>@lot.BottleCount</td>
+                        <td>@(lot.BottledOn?.ToString("dd/MM/yyyy") ?? "Sin registro")</td>
+                        <td>@(!string.IsNullOrWhiteSpace(lot.Notes) ? lot.Notes : "-")</td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm">
+                                <a class="btn btn-outline-secondary" asp-page="/BeerLots/Details" asp-route-id="@lot.Id">Detalles</a>
+                                <a class="btn btn-outline-primary" asp-page="/BeerLots/Edit" asp-route-id="@lot.Id">Editar</a>
+                                <a class="btn btn-outline-danger" asp-page="/BeerLots/Delete" asp-route-id="@lot.Id">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Todavía no hay lotes registrados para este estilo.
+        </div>
+    }
+</section>

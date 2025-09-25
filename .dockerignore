@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/wwwroot/uploads/*
+!.gitkeep
+.git
+.gitignore
+Dockerfile
+render.yaml
+README.md
+*.suo
+*.user
+*.csproj.user
+.vs
+.vscode
+.env
