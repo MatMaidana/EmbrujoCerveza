@@ -10,8 +10,9 @@ body {
 }
 
 .beer-card-img {
-    height: 220px;
-    object-fit: cover;
+    object-fit: cover; /* recorta para llenar el espacio */
+    /*  object-position: center;  centra el recorte */
+    display: block;
 }
 
 .placeholder-image {
