@@ -25,11 +25,18 @@ Aplicación web en ASP.NET Core para gestionar el inventario de una cervecería 
    
 2. Asegura una instancia de PostgreSQL accesible. Por defecto el proyecto usa la cadena `Host=localhost;Database=embrujocervezadb;Username=postgres;Password=postgres;`, que puedes adaptar en `appsettings.json`. En entornos hospedados define la variable `DATABASE_URL` (o `ConnectionStrings__DefaultConnection`) con la URL proporcionada por tu proveedor; la aplicación la normaliza automáticamente al formato que espera Npgsql.
 
-3. Ejecutar la aplicación web:
+3. (Opcional) Cargar datos iniciales en la base:
+   ```bash
+   psql "Host=localhost;Database=embrujocervezadb;Username=postgres;Password=postgres" \
+     -f database/seed-data.sql
+   ```
+   Ajusta la cadena de conexión al servidor que estés utilizando. El script añade los estilos, tipos de botella y lotes de ejemplo sin duplicarlos si ya existen.
+
+4. Ejecutar la aplicación web:
    ```bash
    dotnet run --project src/EmbrujoCerveza.Web
    ```
-4. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
+5. Abrir un navegador y navegar a `https://localhost:7248` (o la URL indicada por la consola).
 
 Las imágenes cargadas se almacenan en `wwwroot/uploads`. Este directorio está incluido en el control de versiones mediante un marcador `.gitkeep`, pero los archivos subidos se omiten por el `.gitignore`.
 
