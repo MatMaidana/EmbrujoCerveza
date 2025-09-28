@@ -64,7 +64,8 @@ namespace EmbrujoCerveza.Web.Pages.BeerLots
             }
 
             BeerLots = await query
-                .OrderByDescending(lot => lot.BottledOn ?? DateTime.MinValue)
+                .OrderByDescending(lot => lot.BottledOn.HasValue) // primero los que tienen fecha
+                .ThenByDescending(lot => lot.BottledOn)           // luego por la fecha
                 .ThenByDescending(lot => lot.Id)
                 .ToListAsync();
         }
